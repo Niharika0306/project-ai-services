@@ -1,4 +1,4 @@
-REGISTRY?=ghcr.io/project-ai-services
+REGISTRY?=icr.io/ai-services-private
 IMAGE=etcd
 TAG?=3.6.5
 

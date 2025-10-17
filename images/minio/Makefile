@@ -1,10 +1,11 @@
-REGISTRY?=ghcr.io/project-ai-services
+REGISTRY?=icr.io/ai-services-private
 IMAGE=minio
-TAG?=RELEASE.2025-09-07T16-13-09Z
+MINIO_RELEASE=RELEASE.2025-10-15T17-29-55Z
+TAG?=${MINIO_RELEASE}
 
 CONTAINER_BUILDER?=podman
 build:
-	$(CONTAINER_BUILDER) build --build-arg RELEASE=${TAG} -t $(REGISTRY)/$(IMAGE):$(TAG) .
+	$(CONTAINER_BUILDER) build --build-arg MINIO_RELEASE=${MINIO_RELEASE} -t $(REGISTRY)/$(IMAGE):$(TAG) .
 .PHONY: build
 
 push:
