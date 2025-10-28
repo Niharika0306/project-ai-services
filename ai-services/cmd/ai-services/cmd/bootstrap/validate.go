@@ -1,4 +1,4 @@
-package cmd
+package bootstrap
 
 import (
 	"fmt"
@@ -9,7 +9,6 @@ import (
 	"strings"
 
 	log "github.com/project-ai-services/ai-services/internal/pkg/logger"
-	"github.com/project-ai-services/ai-services/internal/pkg/validators"
 	"github.com/spf13/cobra"
 	"go.uber.org/zap"
 )
@@ -20,44 +19,12 @@ var (
 
 // Validation check types
 const (
-	CheckRoot          = "root"
-	CheckRHEL          = "rhel"
-	CheckRHN           = "rhn"
-	CheckServiceReport = "service-report"
-	CheckPodman        = "podman"
-	CheckPower11       = "power11"
-	CheckRHAIIS        = "rhaiis"
+	CheckRoot    = "root"
+	CheckRHEL    = "rhel"
+	CheckRHN     = "rhn"
+	CheckPower11 = "power11"
+	CheckRHAIIS  = "rhaiis"
 )
-
-// bootstrapCmd represents the bootstrap command
-func BootstrapCmd() *cobra.Command {
-	bootstrapCmd := &cobra.Command{
-		Use:   "bootstrap",
-		Short: "Bootstraps AI services infrastructure",
-		Long: `Bootstrap and configure the AI services infrastructure.
-
-The bootstrap command helps you set up and validate the environment
-required to run AI services on Power11 systems.
-
-Available subcommands:
-  validate   - Validate system prerequisites and configuration
-  configure  - Configure and initialize the AI services infrastructure`,
-		Example: `  # Validate the environment
-  aiservices bootstrap validate
-
-  # Configure the infrastructure
-  aiservices bootstrap configure
-
-  # Get help on a specific subcommand
-  aiservices bootstrap validate --help`,
-	}
-
-	// subcommands
-	bootstrapCmd.AddCommand(validateCmd())
-	// bootstrapCmd.AddCommand(configureCmd())
-
-	return bootstrapCmd
-}
 
 // validateCmd represents the validate subcommand of bootstrap
 func validateCmd() *cobra.Command {
@@ -78,11 +45,6 @@ System Checks:
   • RHEL version validation (9.6 or higher)
   • Power 11 architecture validation
   • RHN registration status
-  • service-report package availability
-
-Container Runtime:
-  • Podman installation and configuration
-  • Podman version compatibility
 
 License:
   • RHAIIS license
@@ -95,8 +57,6 @@ Available checks to skip:
   root    		  - Root privileges check
   rhel            - RHEL OS and version check
   rhn             - Red Hat Network registration check
-  service-report  - service-report repository check
-  podman          - Podman installation and configuration check
   power11  		  - Power 11 architecture check
   rhaiis   		  - RHAIIS license check (already optional)`,
 		Example: `  # Run all validation checks
@@ -149,37 +109,21 @@ Available checks to skip:
 				}
 			}
 
-			// 4. LTC yum repository for installing service-report package
-			if !skip[CheckServiceReport] {
-				if err := validateServiceReport(); err != nil {
-					validationErrors = append(validationErrors, err)
-				}
-			}
-
-			// 5. Validate Podman installation
-			if !skip[CheckPodman] {
-				if _, err := validators.Podman(); err != nil {
-					validationErrors = append(validationErrors, fmt.Errorf("❌ podman validation failed: %w", err))
-				} else {
-					logger.Info("✅ Podman validation passed")
-				}
-			}
-
-			// 6. IBM Power Version Validation
+			// 4. IBM Power Version Validation
 			if !skip[CheckPower11] {
 				if err := validatePowerVersion(); err != nil {
 					validationErrors = append(validationErrors, err)
 				}
 			}
 
-			// 7. RHAIIS Licence Validation
+			// TODO: 5. RHAIIS Licence Validation
 			if !skip[CheckRHAIIS] {
 				if err := validateRHAIISLicense(); err != nil {
 					validationErrors = append(validationErrors, err)
 				}
 			}
 
-			// 8. Check if Spyre is attached to the system
+			// 6. Check if Spyre is attached to the system
 			if !skip["spyre"] {
 				if err := validateSpyreAttachment(); err != nil {
 					validationErrors = append(validationErrors, err)
@@ -296,12 +240,6 @@ func validateRHNRegistration() error {
 	}
 
 	logger.Info("✅ System is registered with RHN")
-	return nil
-}
-
-// validateServiceReport checks if the service-report package is configured
-func validateServiceReport() error {
-	logger.Debug("Validating if service-report package is configured...")
 	return nil
 }
 
