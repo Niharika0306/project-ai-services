@@ -46,7 +46,7 @@ var createCmd = &cobra.Command{
 
 		cmd.Printf("Creating application '%s' using template '%s'\n", appName, templateName)
 
-		// set SMT level to 2, assuming it is running with root privileges (part of validation in bootstrap)
+		// set SMT level to target value, assuming it is running with root privileges (part of validation in bootstrap)
 		err := setSMTLevel()
 		if err != nil {
 			return fmt.Errorf("failed to set SMT level: %w", err)
@@ -152,7 +152,7 @@ func setSMTLevel() error {
 	// 3. Check if SMT level is already set to target value
 	if currentSMTlevel == *targetSMTLevel {
 		// already set
-		fmt.Printf("SMT level is already set to %d\n", targetSMTLevel)
+		fmt.Printf("SMT level is already set to %d\n", *targetSMTLevel)
 		return nil
 	}
 
@@ -180,7 +180,7 @@ func setSMTLevel() error {
 		return fmt.Errorf("SMT level verification failed: expected %d, got %d", targetSMTLevel, currentSMTlevel)
 	}
 
-	fmt.Printf("SMT level set to %d successfully.\n", targetSMTLevel)
+	fmt.Printf("SMT level set to %d successfully.\n", *targetSMTLevel)
 
 	return nil
 }
