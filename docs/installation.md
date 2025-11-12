@@ -24,12 +24,14 @@ Use the following `curl` command to download it (replace `<version>` with the de
 
 ```bash
 curl -LO https://example.com/ai-services/releases/download/<version>/<ai-services-binary>
+sudo mv <ai-services-binary> /usr/local/bin/
+sudo chmod +x <ai-services-binary>
 ```
 
 ### Run the binary to get started
 
 ```bash
-% ./ai-services
+% ai-services
 A CLI tool for managing AI services infrastructure.
 
 Usage:

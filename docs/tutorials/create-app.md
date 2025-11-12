@@ -9,7 +9,7 @@ Tip: If you have not yet set up your environment, complete the steps in `Install
 ### List all available templates
 
 ```bash
-./ai-services application templates
+ai-services application templates
 ```
 
 ### Create an application
@@ -17,7 +17,7 @@ Tip: If you have not yet set up your environment, complete the steps in `Install
 Choose a template and a unique name for your application.
 
 ```bash
-./ai-services application create <app_name> --template-name=<template_name>
+ai-services application create <app_name> --template-name=<template_name>
 ```
 
 Deployment can take a few minutes. You can relax while the resources are provisioned.
@@ -26,13 +26,13 @@ Deployment can take a few minutes. You can relax while the resources are provisi
 the successful deployment should have some sort of message displayed
 ```
 
-Once deployment completes, you can monitor pod status and readiness with the `./ai-services application ps` command.
+Once deployment completes, you can monitor pod status and readiness with the `ai-services application ps` command.
 
 ### Cleanup
 
 When you're finished, delete the application to free resources.
 
 ```bash
-./ai-services application stop <app_name>
-./ai-services application delete <app_name>  
+ai-services application stop <app_name>
+ai-services application delete <app_name>  
 ```

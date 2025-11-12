@@ -40,6 +40,7 @@ Manage application configuration.
 | `ai-services application model list --template <template_name>` | List models used by templates|
 | `ai-services application model download --template <template_name>` | Download models used by templates|
 | `ai-services application image list --template <template_name>` | Lists container images used by the template |
+| `ai-services application image pull --template <template_name>` | Pulls container images used by the template |
 | `ai-services application ps` | Similar to `podman ps` - lists containers deployed by AI-services |
 | `aiservices application stop <application_name>` | Stops all pods in the application |
 | `aiservices application stop <application_name> --pod-name <pod_name>` | Stops specific pod in the application |
