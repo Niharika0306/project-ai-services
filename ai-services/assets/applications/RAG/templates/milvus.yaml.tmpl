@@ -68,9 +68,11 @@ spec:
         - mountPath: /minio_data
           name: minio-storage
       livenessProbe:
-        httpGet:
-          path: /minio/health/live
-          port: 9000
+        exec:
+          command:
+            - mc
+            - ready
+            - local
         initialDelaySeconds: 30
         periodSeconds: 30
         timeoutSeconds: 20
